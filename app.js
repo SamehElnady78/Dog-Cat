@@ -6,40 +6,36 @@ const supabase = window.supabase.createClient(
   supabaseKey
 );
 
-const form = document.getElementById("auth-form");
-const msg = document.getElementById("msg");
+function getValues() {
+  return {
+    email: document.getElementById("email").value,
+    password: document.getElementById("password").value
+  };
+}
 
-form.addEventListener("submit", async (e) => {
-  e.preventDefault();
-
-  const email = emailInput.value;
-  const password = passwordInput.value;
+async function login() {
+  const { email, password } = getValues();
 
   const { error } = await supabase.auth.signInWithPassword({
     email,
-    password,
+    password
   });
 
   if (error) {
-    msg.textContent = error.message;
+    document.getElementById("msg").innerText = error.message;
   } else {
     window.location.href = "profile.html";
   }
-});
+}
 
-signup.addEventListener("click", async () => {
-  const email = emailInput.value;
-  const password = passwordInput.value;
+async function signup() {
+  const { email, password } = getValues();
 
   const { error } = await supabase.auth.signUp({
     email,
-    password,
+    password
   });
 
-  msg.textContent = error ? error.message : "تم إنشاء الحساب";
-});
-
-const emailInput = document.getElementById("email");
-const passwordInput = document.getElementById("password");
-const signup = document.getElementById("signup");
-alert("JS شغال");
+  document.getElementById("msg").innerText =
+    error ? error.message : "تم إنشاء الحساب، ادخل الآن";
+}
