@@ -1,33 +1,44 @@
-// 1. بيانات Supabase (غيرهم من الداشبورد)
-const SUPABASE_URL = "https://XXXX.supabase.co";
-const SUPABASE_KEY = "sb_publishable_XXXX";
+const SUPABASE_URL = "https://qttcdxwsgyjffywbmyxq.supabase.co";
+const SUPABASE_KEY = "sb_publishable_ugfBMpSeIfoCr9tkLmOjLQ_Bm53MWeq";
 
 const supabase = window.supabase.createClient(
   SUPABASE_URL,
   SUPABASE_KEY
 );
 
-// 2. تسجيل دخول
-async function login(email, password) {
-  const { error } = await supabase.auth.signInWithPassword({
+// دخول أو تسجيل تلقائي
+async function auth() {
+  const email = document.getElementById("email").value;
+  const password = document.getElementById("password").value;
+
+  if (!email || !password) {
+    alert("اكتب الإيميل والباسورد");
+    return;
+  }
+
+  // محاولة دخول
+  let { data, error } = await supabase.auth.signInWithPassword({
     email,
-    password
+    password,
   });
 
+  // لو المستخدم مش موجود → نعمل تسجيل
   if (error) {
-    alert(error.message);
-  } else {
-    window.location.href = "profile.html";
+    let signup = await supabase.auth.signUp({
+      email,
+      password,
+    });
+
+    if (signup.error) {
+      alert(signup.error.message);
+      return;
+    }
   }
+
+  window.location.href = "profile.html";
 }
 
-// 3. تسجيل خروج
-async function logout() {
-  await supabase.auth.signOut();
-  window.location.href = "index.html";
-}
-
-// 4. جلب بيانات المستخدم
+// تحميل البروفايل
 async function loadProfile() {
   const { data } = await supabase.auth.getUser();
   if (!data.user) {
@@ -36,4 +47,10 @@ async function loadProfile() {
   }
 
   document.getElementById("uEmail").innerText = data.user.email;
-    }
+}
+
+// خروج
+async function logout() {
+  await supabase.auth.signOut();
+  window.location.href = "index.html";
+        }
