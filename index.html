@@ -7,19 +7,32 @@
 </head>
 <body>
 
-<h2>تسجيل الدخول / إنشاء حساب</h2>
+  <h2>تسجيل الدخول / إنشاء حساب</h2>
 
-<form id="auth-form">
-  <input type="email" id="email" placeholder="البريد الإلكتروني" required>
-  <input type="password" id="password" placeholder="كلمة المرور" required>
+  <form id="auth-form" onsubmit="return false;">
+    <input
+      type="email"
+      id="email"
+      placeholder="البريد الإلكتروني"
+      required
+    >
 
-  <button type="submit">دخول</button>
-  <button type="button" id="signup">إنشاء حساب</button>
-</form>
+    <input
+      type="password"
+      id="password"
+      placeholder="كلمة المرور"
+      required
+    >
 
-<p id="msg"></p>
+    <button type="button" onclick="login()">دخول</button>
+    <button type="button" onclick="signup()">تسجيل</button>
+  </form>
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="app.js"></script>
+  <p id="msg"></p>
+
+  <!-- Supabase -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="app.js"></script>
+
 </body>
 </html>
