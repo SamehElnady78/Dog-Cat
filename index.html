@@ -1,22 +1,36 @@
 <!DOCTYPE html>
 <html lang="ar">
 <head>
-<meta charset="UTF-8">
-<title>Dog-Cat | Login</title>
-<link rel="stylesheet" href="style.css">
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <meta charset="UTF-8">
+  <title>DogCat | دخول</title>
+  <link rel="stylesheet" href="style.css">
+
+  <!-- مكتبة Supabase -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
 
-<h2>تسجيل الدخول</h2>
+  <div class="container">
+    <h2>تسجيل الدخول / إنشاء حساب</h2>
 
-<input id="email" placeholder="الإيميل">
-<input id="password" type="password" placeholder="كلمة السر">
-<button onclick="login(
-  email.value,
-  password.value
-)">دخول</button>
+    <input
+      type="email"
+      id="email"
+      placeholder="البريد الإلكتروني"
+      required
+    >
 
-<script src="app.js"></script>
+    <input
+      type="password"
+      id="password"
+      placeholder="كلمة المرور"
+      required
+    >
+
+    <button onclick="auth()">دخول / تسجيل</button>
+  </div>
+
+  <!-- كود المشروع -->
+  <script src="app.js"></script>
 </body>
 </html>
