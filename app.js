@@ -1,5 +1,5 @@
-const supabaseUrl = "PUT_SUPABASE_URL_HERE";
-const supabaseKey = "PUT_PUBLIC_ANON_KEY_HERE";
+const supabaseUrl = "https://qttcdxwsgyjffywbmyxq.supabase.co";
+const supabaseKey = "sb_publishable_ugfBMpSeIfoCr9tkLmOjLQ_Bm53MWeq";
 
 const supabase = window.supabase.createClient(
   supabaseUrl,
