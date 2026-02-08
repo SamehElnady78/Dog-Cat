@@ -2,22 +2,20 @@
 <html lang="ar">
 <head>
 <meta charset="UTF-8">
-<title>تسجيل</title>
+<title>Dog-Cat | Login</title>
 <link rel="stylesheet" href="style.css">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
 
-<h2>تسجيل / دخول</h2>
+<h2>تسجيل الدخول</h2>
 
-<input id="email" placeholder="Email">
-<input id="password" type="password" placeholder="Password">
-
-<label>
-  <input type="checkbox" id="terms"> أوافق على السياسات
-</label>
-
-<button onclick="auth()">دخول</button>
+<input id="email" placeholder="الإيميل">
+<input id="password" type="password" placeholder="كلمة السر">
+<button onclick="login(
+  email.value,
+  password.value
+)">دخول</button>
 
 <script src="app.js"></script>
 </body>
