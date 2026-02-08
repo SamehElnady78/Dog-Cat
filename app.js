@@ -1,56 +1,44 @@
-const SUPABASE_URL = "https://qttcdxwsgyjffywbmyxq.supabase.co";
-const SUPABASE_KEY = "sb_publishable_ugfBMpSeIfoCr9tkLmOjLQ_Bm53MWeq";
+const supabaseUrl = "PUT_SUPABASE_URL_HERE";
+const supabaseKey = "PUT_PUBLIC_ANON_KEY_HERE";
 
 const supabase = window.supabase.createClient(
-  SUPABASE_URL,
-  SUPABASE_KEY
+  supabaseUrl,
+  supabaseKey
 );
 
-// دخول أو تسجيل تلقائي
-async function auth() {
-  const email = document.getElementById("email").value;
-  const password = document.getElementById("password").value;
+const form = document.getElementById("auth-form");
+const msg = document.getElementById("msg");
 
-  if (!email || !password) {
-    alert("اكتب الإيميل والباسورد");
-    return;
-  }
+form.addEventListener("submit", async (e) => {
+  e.preventDefault();
 
-  // محاولة دخول
-  let { data, error } = await supabase.auth.signInWithPassword({
+  const email = emailInput.value;
+  const password = passwordInput.value;
+
+  const { error } = await supabase.auth.signInWithPassword({
     email,
     password,
   });
 
-  // لو المستخدم مش موجود → نعمل تسجيل
   if (error) {
-    let signup = await supabase.auth.signUp({
-      email,
-      password,
-    });
-
-    if (signup.error) {
-      alert(signup.error.message);
-      return;
-    }
+    msg.textContent = error.message;
+  } else {
+    window.location.href = "profile.html";
   }
+});
 
-  window.location.href = "profile.html";
-}
+signup.addEventListener("click", async () => {
+  const email = emailInput.value;
+  const password = passwordInput.value;
 
-// تحميل البروفايل
-async function loadProfile() {
-  const { data } = await supabase.auth.getUser();
-  if (!data.user) {
-    window.location.href = "index.html";
-    return;
-  }
+  const { error } = await supabase.auth.signUp({
+    email,
+    password,
+  });
 
-  document.getElementById("uEmail").innerText = data.user.email;
-}
+  msg.textContent = error ? error.message : "تم إنشاء الحساب";
+});
 
-// خروج
-async function logout() {
-  await supabase.auth.signOut();
-  window.location.href = "index.html";
-        }
+const emailInput = document.getElementById("email");
+const passwordInput = document.getElementById("password");
+const signup = document.getElementById("signup");
