@@ -42,3 +42,4 @@ signup.addEventListener("click", async () => {
 const emailInput = document.getElementById("email");
 const passwordInput = document.getElementById("password");
 const signup = document.getElementById("signup");
+alert("JS شغال");
