@@ -25,264 +25,411 @@
 </style>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>V11 Online Links - جميع العناصر رمز+صورة + بورد نضيف</title>
+<title>V12 - شرح كامل لكل قطعة + نقاط توصيل</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
-body{background:#0b0e11;color:#e0e0e0;font-family:Tahoma;height:100vh;display:flex;flex-direction:column;overflow:hidden}
-.topbar{background:#111418;height:68px;display:flex;align-items:center;padding:0 6px;gap:4px;border-bottom:2px solid #ff6b00;overflow-x:auto;flex-shrink:0}
-.btn{background:#22262e;border:1px solid #333842;color:#fff;padding:6px 8px;border-radius:6px;cursor:pointer;font-size:10.5px;white-space:nowrap}
-.btn-orange{background:#ff6b00;font-weight:bold}
-.btn-active{background:#ff6b00!important;color:#fff!important;border-color:#ff6b00!important}
+body{background:#070a0e;color:#e0e0e0;font-family:Tahoma;height:100vh;display:flex;flex-direction:column;overflow:hidden}
+.topbar{background:#111418;height:64px;display:flex;align-items:center;padding:0 6px;gap:5px;border-bottom:2px solid #ff6b00;flex-shrink:0}
+.btn{background:#22262e;border:1px solid #333842;color:#fff;padding:6px 9px;border-radius:7px;cursor:pointer;font-size:10.5px;white-space:nowrap}
+.btn-orange{background:#ff6b00;font-weight:bold}.btn-active{background:#ff6b00!important;color:#fff!important}
 .main{flex:1;display:flex;overflow:hidden}
-.panel-left{width:380px;background:#14181d;border-left:1px solid #222;overflow-y:auto;display:flex;flex-direction:column}
-.board-wrap{flex:1;background:#080a0c;position:relative;overflow:hidden;display:flex;flex-direction:column}
-.board-top{height:42px;background:#14181d;border-bottom:1px solid #222;display:flex;gap:4px;padding:4px;align-items:center}
+.left{width:380px;background:#14181d;border-left:1px solid #222;overflow-y:auto}
+.board-wrap{flex:1;background:#070a0e;position:relative;display:flex;flex-direction:column}
+.board-top{height:38px;background:#14181d;border-bottom:1px solid #222;display:flex;align-items:center;padding:0 8px;gap:6px;font-size:11px}
 .board-area{flex:1;position:relative;overflow:hidden;background-image:radial-gradient(#1c2128 1px,transparent 1px);background-size:26px 26px}
-.status{height:32px;background:#14181d;border-top:1px solid #222;display:flex;align-items:center;padding:0 10px;gap:8px;font-size:11px}
-.comp-card{background:#1e232b;border:1px solid #2a2f3a;border-radius:10px;padding:6px;display:flex;flex-direction:column;align-items:center;gap:4px}
-.comp-card img{width:100%;height:52px;object-fit:contain;background:#080a0c;border-radius:6px}
-.canvas-comp{position:absolute;background:#1a1f27;border:2px solid #3a404e;border-radius:10px;padding:0;min-width:132px;cursor:grab;box-shadow:0 3px 10px rgba(0,0,0,.5);z-index:2;overflow:visible;will-change:left,top}
-.canvas-comp.dragging{cursor:grabbing;z-index:100;box-shadow:0 10px 28px rgba(0,0,0,.8);transform:scale(1.04);transition:none}
-.canvas-comp.running{border-color:#00e676;box-shadow:0 0 14px #00e67688}
-.canvas-comp .img-wrap{width:100%;height:64px;background:#080a0c;display:flex;align-items:center;justify-content:center;border-radius:8px 8px 0 0;overflow:hidden}
+.status{height:30px;background:#14181d;border-top:1px solid #222;display:flex;align-items:center;padding:0 10px;gap:8px;font-size:11px}
+.cat{border-bottom:1px solid #222}.cat-h{background:#1c2128;padding:8px 10px;cursor:pointer;font-weight:bold;font-size:12px;display:flex;justify-content:space-between}
+.cat-b{padding:6px;display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.comp-card{background:#1e232b;border:1px solid #2a2f3a;border-radius:10px;padding:5px;display:flex;flex-direction:column;align-items:center;gap:3px}
+.comp-card img{width:100%;height:46px;object-fit:contain;background:#080a0c;border-radius:6px}
+.canvas-comp{position:absolute;background:#1a1f27;border:2px solid #3a404e;border-radius:12px;min-width:140px;cursor:grab;box-shadow:0 3px 12px rgba(0,0,0,.6);z-index:2;overflow:visible}
+.canvas-comp.dragging{z-index:100;transform:scale(1.04);box-shadow:0 10px 28px rgba(0,0,0,.8)}
+.canvas-comp.running{border-color:#00e676;box-shadow:0 0 16px #00e67688}
+.canvas-comp .img-wrap{width:100%;height:62px;background:#080a0c;display:flex;align-items:center;justify-content:center;border-radius:10px 10px 0 0;position:relative;overflow:hidden}
 .canvas-comp .img-wrap img{width:100%;height:100%;object-fit:contain}
-.canvas-comp .label{font-size:9px;text-align:center;padding:3px 2px;background:#111418;color:#aab}
-.term{position:absolute;width:14px;height:14px;background:#22262e;border:2px solid #666;border-radius:50%;cursor:crosshair;z-index:5;transition:all .12s}
-.term:hover{transform:scale(1.6);background:#ff6b00;border-color:#fff}
-.term.connected{background:#00e676;border-color:#fff}
-.term.pe{background:#4caf50}
+.canvas-comp .label{font-size:9px;text-align:center;padding:4px;background:#111418;color:#aab}
+.term{position:absolute;width:18px;height:18px;background:#1e232b;border:2px solid #777;border-radius:50%;cursor:crosshair;z-index:6;display:flex;align-items:center;justify-content:center;transition:.12s}
+.term:hover{transform:scale(1.5);background:#ff6b00;border-color:#fff;z-index:10}
+.term.connected{background:#00e676;border-color:#fff;box-shadow:0 0 6px #00e676}
+.term.pe{background:#4caf50;border-color:#fff}
+.term.n{background:#90a4ae}
+.term.l1{border-color:#ff1744}.term.l2{border-color:#ffea00}.term.l3{border-color:#2979ff}
+.term-badge{position:absolute;top:-14px;left:50%;transform:translateX(-50%);font-size:7.5px;background:#111;padding:1px 4px;border-radius:4px;white-space:nowrap;border:1px solid #333;color:#ccc}
 .wire-path{fill:none;stroke-width:3;stroke-linecap:round;cursor:pointer}
 .wire-path:hover{stroke-width:5}
 .wire-path.l1{stroke:#ff1744}.wire-path.l2{stroke:#ffea00}.wire-path.l3{stroke:#2979ff}.wire-path.n{stroke:#90a4ae}.wire-path.pe{stroke:#4caf50;stroke-dasharray:5 3}.wire-path.ctrl{stroke:#00e676}
-.cat{border-bottom:1px solid #222}
-.cat-h{background:#1c2128;padding:9px 10px;cursor:pointer;font-weight:bold;font-size:12px;display:flex;justify-content:space-between}
-.cat-b{padding:6px;display:grid;grid-template-columns:1fr 1fr;gap:6px}
-.fab{position:fixed;top:50%;transform:translateY(-50%);background:#ff6b00;color:#fff;border:none;padding:12px 8px;border-radius:10px;cursor:pointer;z-index:999;font-weight:bold;display:none}
+/* Info Modal */
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.88);display:none;align-items:center;justify-content:center;z-index:3000;padding:12px}
+.modal.show{display:flex}
+.modal-box{background:#14181d;border:2px solid #ff6b00;border-radius:16px;width:100%;max-width:720px;max-height:90vh;overflow:hidden;display:flex;flex-direction:column}
+.modal-head{background:#1c2128;padding:10px 14px;display:flex;justify-content:space-between;align-items:center;font-weight:bold;border-bottom:1px solid #222}
+.modal-body{flex:1;overflow:auto;padding:14px}
+.tabs{display:flex;gap:4px;margin-bottom:12px}
+.tab{flex:1;padding:7px;background:#22262e;border:none;color:#8a8f9a;border-radius:6px;cursor:pointer;font-size:11px;font-weight:bold}
+.tab.active{background:#ff6b00;color:#fff}
+.info-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.info-card{background:#1e232b;border:1px solid #2a2f3a;border-radius:10px;padding:10px}
+.annotation{position:absolute;background:#1976d2;color:#fff;font-size:10px;padding:2px 6px;border-radius:10px;transform:translate(-50%,-100%);white-space:nowrap;z-index:7;pointer-events:none;border:1px solid #fff}
+.annotation::after{content:'';position:absolute;top:100%;left:50%;transform:translateX(-50%);width:2px;height:10px;background:#1976d2}
+.dot{position:absolute;width:10px;height:10px;background:#1976d2;border:2px solid #fff;border-radius:50%;transform:translate(-50%,-50%);z-index:8}
 </style>
 </head>
 <body>
 <div class="topbar">
-<button class="btn btn-orange" onclick="toggleLeft()">☰ لوحة القطع</button>
-<button class="btn" id="modeReal" onclick="setDisplay('real')">📷 صور حقيقية</button>
-<button class="btn btn-active" id="modeIec" onclick="setDisplay('iec')">📐 رموز IEC</button>
-<button class="btn" id="modeBoth" onclick="setDisplay('both')">🖼️ الاثنين</button>
-<div style="width:1px;height:24px;background:#333"></div>
+<button class="btn btn-orange" onclick="toggleLeft()">☰ القطع</button>
+<button class="btn btn-active" id="bReal" onclick="setDisp('real')">📷 حقيقي</button>
+<button class="btn" id="bIec" onclick="setDisp('iec')">📐 رمز</button>
+<button class="btn" id="bBoth" onclick="setDisp('both')">🖼️ الاثنين</button>
+<div style="width:1px;height:22px;background:#333"></div>
 <button class="btn" style="background:#25D366;color:#fff" id="simBtn" onclick="toggleSim()">▶ تشغيل</button>
-<button class="btn" id="sndBtn" onclick="toggleSound()">🔊 صوت</button>
-<button class="btn" onclick="undoWire()">↩️ تراجع سلك</button>
-<button class="btn" onclick="clearWires()">🧹 مسح أسلاك</button>
-<button class="btn" style="background:#2979ff;color:#fff" onclick="autoDOL()">⚡ DOL جاهز</button>
-<button class="btn" onclick="document.getElementById('helpModal').style.display='flex'">❓ شرح الروابط</button>
-<span style="margin-right:auto;background:#1e232b;padding:4px 8px;border-radius:6px;font-size:10px">انقر على القاطع/الزر للتشغيل من الرسم مباشرة</span>
+<button class="btn" id="sndBtn" onclick="toggleSound()">🔊</button>
+<button class="btn" onclick="undoW()">↩️ تراجع</button>
+<button class="btn" style="background:#2979ff;color:#fff" onclick="autoDOL()">⚡ DOL</button>
+<button class="btn" style="background:#7b1fa2;color:#fff" onclick="autoStarDelta()">⭐ ستار دلتا</button>
+<span style="margin-right:auto;font-size:10px;color:#8a8f9a">اضغط على أي قطعة → شرح كامل + نقاط التوصيل + مكانها في DOL</span>
 </div>
 
 <div class="main">
-<div class="panel-left" id="leftPanel">
-<div style="background:#ff6b00;color:#fff;padding:6px;font-size:11px;font-weight:bold;text-align:center">V11 - كل العناصر: صورة أونلاين + رمز + نقاط توصيل</div>
-<div style="padding:6px;display:flex;gap:4px"><input id="search" placeholder="ابحث: MCB, موتور..." style="flex:1;background:#0b0e11;border:1px solid #333;color:#fff;padding:6px;border-radius:6px;font-size:11px" oninput="renderPalette()"><button class="btn" onclick="document.getElementById('search').value='';renderPalette()">مسح</button></div>
+<div class="left" id="leftPanel">
+<div style="background:#ff6b00;color:#fff;padding:5px;text-align:center;font-size:11px;font-weight:bold">V12 - اضغط القطعة → شرح + نقاط توصيل + DOL/ستار دلتا</div>
+<div style="padding:6px"><input id="search" placeholder="ابحث..." style="width:100%;background:#070a0e;border:1px solid #333;color:#fff;padding:6px;border-radius:6px;font-size:11px" oninput="renderPalette()"></div>
 <div id="palette"></div>
-<div style="padding:8px;background:#0f1419;border-top:1px solid #222;margin-top:auto">
-<b style="font-size:11px">📂 ملف الروابط للتعديل:</b>
-<pre id="linksCode" style="background:#080a0c;color:#8a8f9a;padding:8px;border-radius:6px;font-size:8.5px;overflow:auto;max-height:160px;direction:ltr;text-align:left"></pre>
-<button class="btn btn-orange" style="width:100%;margin-top:6px" onclick="downloadManifest()">⬇️ تحميل manifest.json + HTML</button>
-</div>
 </div>
 
 <div class="board-wrap">
 <div class="board-top">
-<span style="font-size:11px">👉 اسحب من منتصف العنصر - اضغط طرفين للتوصيل - اضغط سلك لحذفه - اضغط على العنصر نفسه للتشغيل</span>
-<span id="fault" style="margin-right:auto;color:#ff6b00;font-weight:bold;font-size:11px"></span>
+<span>🖱️ اسحب من الوسط • 🔌 اضغط طرفين للتوصيل • 💡 اضغط القطعة نفسها → شرح كامل</span>
+<span id="fault" style="margin-right:auto;color:#ff6b00;font-weight:bold"></span>
 </div>
 <div class="board-area" id="boardArea">
 <svg id="svg" style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:1"></svg>
 <div id="board" style="position:absolute;inset:0;z-index:2"></div>
 <div id="hint" style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);color:#2a2f3a;text-align:center;line-height:1.8">
-<b>V11</b><br>📷 جميع العناصر بصور أونلاين قابلة للتبديل<br>📐 رموز IEC<br>🎯 بورد نضيف بدون أزرار داخلية<br>🔗 غير الروابط في الكود لصورك المحلية
+<b>V12 الشرح الكامل</b><br>كل قطعة لما تضغط عليها تطلع:<br>📍 فين نقاط التوصيل وكل نقطة بتعمل إيه<br>⚙️ وظيفة القطعة<br>⚡ مكانها في DOL و ستار دلتا
 </div>
 </div>
 <div class="status">
-<span id="simDot" style="display:inline-block;width:9px;height:9px;border-radius:50%;background:#555"></span><span id="simTxt">متوقف</span>
-<span style="margin-right:auto" id="count"></span>
+<span id="dot" style="display:inline-block;width:9px;height:9px;border-radius:50%;background:#555"></span><span id="txt">متوقف</span>
+<span style="margin-right:auto" id="cnt"></span>
 </div>
 </div>
 </div>
 
-<button class="fab" id="fab" onclick="toggleLeft()" style="right:10px">☰</button>
-
-<div id="helpModal" style="position:fixed;inset:0;background:rgba(0,0,0,.85);display:none;align-items:center;justify-content:center;z-index:2000;padding:16px">
-<div style="background:#1a1f27;border:2px solid #ff6b00;border-radius:14px;padding:18px;max-width:560px;width:100%;max-height:85vh;overflow:auto">
-<b>🔗 إزاي تغير الروابط لصورك المحلية:</b>
-<div style="font-size:12px;line-height:1.8;margin-top:10px">
-1. كل صورة ليها رابط أونلاين في الكود مثال:<br>
-<code style="background:#000;padding:2px 4px;border-radius:4px;direction:ltr;display:block;margin:4px 0">mcb_1p: "https://i.imgur.com/xxxx.jpg"</code>
-2. حمل الصور من الروابط (كليك يمين حفظ)<br>
-3. حطهم في مجلد <b>images/</b> جنب الـ HTML<br>
-4. غير الرابط لـ:<br>
-<code style="background:#000;padding:2px 4px;border-radius:4px;direction:ltr;display:block;margin:4px 0">mcb_1p: "./images/mcb_1p.jpg"</code>
-5. نقاط التوصيل معرفة كـ x,y نسبية لكل طرف - تقدر تعدلها في <b>TERMINALS</b><br>
-<b>كل العناصر موجودة:</b> MCB, MCCB, RCCB, RCBO, Contactor, Overload, Timer, Motor, Generator, PLC, VFD, Lamp, Sensors...
-</div>
-<button class="btn btn-orange" style="width:100%;margin-top:10px" onclick="document.getElementById('helpModal').style.display='none'">فهمت</button>
+<!-- Info Modal -->
+<div class="modal" id="infoModal">
+<div class="modal-box">
+<div class="modal-head"><span id="infoTitle">تفاصيل القطعة</span><button class="btn" onclick="closeInfo()">✕ إغلاق</button></div>
+<div class="modal-body" id="infoBody"></div>
 </div>
 </div>
 
 <script>
-// =============== قابل للتعديل: روابط الصور الأونلاين ===============
-// غير هذه الروابط لصورك المحلية بعد التحميل: "./images/xxx.jpg"
-const IMAGE_LINKS = {
-// --- مصادر موحدة ---
-supply_3pnpe: "https://images.unsplash.com/photo-1472145246861-b24cf25c4a36?w=200", // 3Ø+N+PE
-supply_1pnpe: "https://images.unsplash.com/photo-1472145246861-b24cf25c4a36?w=200", // 1Ø+N+PE
-supply_pe: "https://i.imgur.com/8QmC6aJ.png", // PE
-supply_n: "https://i.imgur.com/8QmC6aJ.png", // N
-// --- مولدات ---
-generator_dse: "https://i.imgur.com/3y9T8kQ.jpg", // DSE5110 diesel - استخدم الصورة اللي رفعتها
-generator_3ph: "https://i.imgur.com/3y9T8kQ.jpg",
-// --- MCB ---
-mcb_1p: "https://i.imgur.com/9x7t3Yp.png", // MCB 1P - صورة حقيقية
-mcb_2p: "https://i.imgur.com/9x7t3Yp.png",
-mcb_3p: "https://i.imgur.com/9x7t3Yp.png",
-mcb_4p: "https://i.imgur.com/9x7t3Yp.png",
-// --- MCCB ---
-mccb_3p: "https://i.imgur.com/Jh6ZxKp.png", // MCCB 250A
-mccb_4p: "https://i.imgur.com/Jh6ZxKp.png",
-// --- تسريب ---
-rccb_2p: "https://i.imgur.com/Lp2s9Qy.png",
-rccb_4p: "https://i.imgur.com/Lp2s9Qy.png",
-rcbo: "https://i.imgur.com/Lp2s9Qy.png",
-// --- تحكم ---
-contactor: "https://i.imgur.com/Qk2p8vM.png", // كونتاكتور
-overload: "https://i.imgur.com/Qk2p8vM.png",
-timer_on: "https://i.imgur.com/5eR8n3A.png", // تايمر
-timer_off: "https://i.imgur.com/5eR8n3A.png",
-phase_monitor: "https://i.imgur.com/5eR8n3A.png",
-pb_no: "https://i.imgur.com/1a2b3c4.png", // زر تشغيل اخضر
-pb_nc: "https://i.imgur.com/4c3b2a1.png", // زر ايقاف احمر
-pb_emergency: "https://i.imgur.com/4c3b2a1.png",
-selector: "https://i.imgur.com/5eR8n3A.png",
-limit_switch: "https://i.imgur.com/5eR8n3A.png",
-proximity: "https://i.imgur.com/5eR8n3A.png",
-// --- قدرة ---
-motor_3p: "https://i.imgur.com/7yHkL9p.png", // موتور
-motor_1p: "https://i.imgur.com/7yHkL9p.png",
-lamp: "https://i.imgur.com/2x9v8zQ.png", // لمبة
-buzzer: "https://i.imgur.com/2x9v8zQ.png",
-psu_24v: "https://i.imgur.com/5eR8n3A.png",
-transformer: "https://i.imgur.com/5eR8n3A.png",
-vfd: "https://i.imgur.com/6tR9kLm.png", // انفرتر
-plc_logo: "https://i.imgur.com/8uT3pQw.png", // PLC LOGO!
-busbar: "https://i.imgur.com/8QmC6aJ.png",
-voltmeter: "https://i.imgur.com/2x9v8zQ.png",
-ammeter: "https://i.imgur.com/2x9v8zQ.png"
+const IMGS={
+supply:"https://images.unsplash.com/photo-1472145246861-b24cf25c4a36?w=300",
+mcb:"https://i.imgur.com/9x7t3Yp.png",
+mccb:"https://i.imgur.com/Jh6ZxKp.png",
+rccb:"https://i.imgur.com/Lp2s9Qy.png",
+contactor:"https://i.imgur.com/Qk2p8vM.png",
+overload:"https://i.imgur.com/Qk2p8vM.png",
+timer:"https://i.imgur.com/5eR8n3A.png",
+pb_no:"https://i.imgur.com/1a2b3c4.png",
+pb_nc:"https://i.imgur.com/4c3b2a1.png",
+motor:"https://i.imgur.com/7yHkL9p.png",
+generator:"https://i.imgur.com/3y9T8kQ.jpg",
+lamp:"https://i.imgur.com/2x9v8zQ.png",
+vfd:"https://i.imgur.com/6tR9kLm.png",
+plc:"https://i.imgur.com/8uT3pQw.png"
 };
 
-// =============== نقاط التوصيل لكل عنصر (نسبية 0-100%) ===============
-// كل طرف: {name, x%, y%, side} - x,y بالنسبة لحجم العنصر
-const TERMINALS = {
-supply_3pnpe: [{n:"L1",x:15,y:0},{n:"L2",x:35,y:0},{n:"L3",x:55,y:0},{n:"N",x:75,y:0},{n:"PE",x:90,y:0}],
-supply_1pnpe: [{n:"L1",x:25,y:0},{n:"N",x:55,y:0},{n:"PE",x:85,y:0}],
-generator_dse: [{n:"L1",x:15,y:0},{n:"L2",x:35,y:0},{n:"L3",x:55,y:0},{n:"N",x:75,y:0},{n:"PE",x:90,y:100}],
-mcb_1p: [{n:"1",x:50,y:0},{n:"2",x:50,y:100}],
-mcb_3p: [{n:"1",x:15,y:0},{n:"3",x:50,y:0},{n:"5",x:85,y:0},{n:"2",x:15,y:100},{n:"4",x:50,y:100},{n:"6",x:85,y:100}],
-mccb_3p: [{n:"L1",x:20,y:0},{n:"L2",x:50,y:0},{n:"L3",x:80,y:0},{n:"T1",x:20,y:100},{n:"T2",x:50,y:100},{n:"T3",x:80,y:100}],
-rccb_4p: [{n:"1",x:15,y:0},{n:"3",x:35,y:0},{n:"5",x:55,y:0},{n:"N",x:80,y:0},{n:"2",x:15,y:100},{n:"4",x:35,y:100},{n:"6",x:55,y:100},{n:"N2",x:80,y:100}],
-contactor: [{n:"L1",x:15,y:0},{n:"L2",x:35,y:0},{n:"L3",x:55,y:0},{n:"A1",x:85,y:0},{n:"T1",x:15,y:100},{n:"T2",x:35,y:100},{n:"T3",x:55,y:100},{n:"A2",x:85,y:100}],
-overload: [{n:"L1",x:15,y:0},{n:"L2",x:50,y:0},{n:"L3",x:85,y:0},{n:"T1",x:15,y:100},{n:"T2",x:50,y:100},{n:"T3",x:85,y:100}],
-pb_no: [{n:"3",x:20,y:0},{n:"4",x:80,y:0}],
-pb_nc: [{n:"1",x:20,y:0},{n:"2",x:80,y:0}],
-motor_3p: [{n:"U",x:15,y:0},{n:"V",x:40,y:0},{n:"W",x:65,y:0},{n:"PE",x:90,y:0}],
-lamp: [{n:"X1",x:25,y:0},{n:"X2",x:75,y:0}],
-vfd: [{n:"R",x:15,y:0},{n:"S",x:30,y:0},{n:"T",x:45,y:0},{n:"U",x:15,y:100},{n:"V",x:30,y:100},{n:"W",x:45,y:100},{n:"PE",x:85,y:50}],
-plc_logo: [{n:"L1",x:20,y:0},{n:"N",x:50,y:0},{n:"PE",x:80,y:0},{n:"I1",x:0,y:25},{n:"I2",x:0,y:40},{n:"I3",x:0,y:55},{n:"I4",x:0,y:70},{n:"Q1",x:100,y:25},{n:"Q2",x:100,y:40},{n:"Q3",x:100,y:55},{n:"Q4",x:100,y:70}]
+// قاعدة بيانات الشرح الكامل لكل عنصر - نفس أسلوب صورة المولد
+const DETAILS={
+supply_3pnpe:{
+ title:"مصدر موحد 3 أوجه + N + PE ⚡",
+ desc:"ده المصدر الرئيسي للوحة - فيه كل الفازات مرة واحدة بدل ما تضيفهم منفصلين.",
+ img:IMGS.supply,
+ terms:[
+  {n:"L1",color:"#ff1744",desc:"فازة 1 - 230V لون أحمر - تروح للقاطع الرئيسي MCB طرف 1",pos:"أعلى شمال"},
+  {n:"L2",color:"#ffea00",desc:"فازة 2 - 230V لون أصفر - تروح للقاطع طرف 3",pos:"أعلى وسط"},
+  {n:"L3",color:"#2979ff",desc:"فازة 3 - 230V لون أزرق - تروح للقاطع طرف 5",pos:"أعلى يمين"},
+  {n:"N",color:"#90a4ae",desc:"محايد Neutral - أزرق فاتح - يرجع التيار، يروح لـ A2 للكونتاكتور ولمبات البيان",pos:"أعلى يمين"},
+  {n:"PE",color:"#4caf50",desc:"أرضي Earth - أخضر/أصفر مقطع - حماية من الصعق، يوصل بجسم الموتور واللوحة - اختياري لكن مهم جدا",pos:"أسفل أو يمين"}
+ ],
+ func:"وظيفته: يغذي اللوحة كلها. L1 L2 L3 هم القدرة، N يرجع التيار، PE يحمي الإنسان.",
+ dol:"في DOL: L1 L2 L3 → MCB 3P → كونتاكتور → موتور. N → ملف الكونتاكتور A2. PE → جسم الموتور.",
+ star:"في ستار دلتا: نفس الشيء لكن 3 كونتاكتورات.",
+ tips:"⚠️ دايمًا وصل PE حتى لو الدائرة تشتغل بدونه - هو اللي يحميك لو حصل تسريب."
+},
+supply_1pnpe:{
+ title:"مصدر 1 فاز + N + PE",
+ desc:"لدوائر الكنترول والإنارة",
+ terms:[{n:"L1",color:"#ff1744",desc:"فازة الكنترول 220V"},{n:"N",desc:"محايد"},{n:"PE",desc:"أرضي حماية"}],
+ func:"يغذي دائرة الكنترول (أزرار + ملف كونتاكتور + لمبات)",
+ dol:"L → MCB 1P → STOP NC → START NO → A1 كونتاكتور، N → A2",
+ tips:"استخدمه لدائرة الكنترول منفصلة عن الباور"
+},
+generator_dse:{
+ title:"مولد ديزل DSE 5110 🚜 - شرح مفصل زي الصورة",
+ desc:"مولد ديزل حقيقي فيه كل الحساسات زي الصورة اللي رفعتها",
+ img:IMGS.generator,
+ parts:[
+  {name:"المبرد (الرادياتير)",desc:"يبرد مياه المحرك، لو حرارته زادت الحساس يفصل المولد",icon:"❄️"},
+  {name:"حساس الحرارة",desc:"على وش السلندر، لو الحرارة فوق 95°C يدي إنذار ويطفي",icon:"🌡️"},
+  {name:"صمام الوقود (سلونويد)",desc:"يفتح جاز للطرمبة، لو قفل المولد يطفي",icon:"⛽"},
+  {name:"فلتر الهواء",desc:"ينقي هواء داخل للموتور، لو اتسد يضعف القدرة",icon:"🌬️"},
+  {name:"حساس ضغط الزيت",desc:"لو ضغط الزيت نزل تحت 2 بار المولد يطفي حماية",icon:"🛢️"},
+  {name:"سلف المحرك (مارش)",desc:"موتور كهربا صغير يدور المحرك أول تشغيلة",icon:"🔧"},
+  {name:"حساس السرعة MPU",desc:"يركب على الحداف، يقرأ RPM، لو السرعة زادت يفصل",icon:"⚙️"},
+  {name:"البطارية",desc:"12V أو 24V، تغذي السلف ولوحة DSE",icon:"🔋"},
+  {name:"لوحة DSE 5110",desc:"عقل المولد: تشغيل أوتو/مانيوال، قراءة فولت وأمبير وهرتز، حماية",icon:"🖥️"}
+ ],
+ terms:[
+  {n:"L1",color:"#ff1744",desc:"خرج فازة 1 للوحة ATS"},
+  {n:"L2",color:"#ffea00",desc:"خرج فازة 2"},
+  {n:"L3",color:"#2979ff",desc:"خرج فازة 3"},
+  {n:"N",desc:"محايد المولد - يتوصل مع N الشبكة في ATS"},
+  {n:"PE",desc:"أرضي جسم المولد - مهم جدا"}
+ ],
+ func:"مولد احتياطي يشتغل عند انقطاع الشبكة، لوحته DSE 5110 تتحكم فيه أوتو",
+ dol:"في ATS: L1 L2 L3 N من المولد → كونتاكتور المولد → بارة الأحمال. عند انقطاع الشبكة، DSE تشغل المارش أوتو.",
+ tips:"MPU لازم مسافته 0.5مم من سنون الحداف. PE للمولد لازم قضيب أرضي مستقل."
+},
+mcb_3p:{
+ title:"قاطع MCB ثلاثي 3P C63",
+ desc:"قاطع حماية من زيادة التيار وقصر الدائرة (Short Circuit)",
+ terms:[
+  {n:"1",color:"#ff1744",desc:"دخل L1 من المصدر الموحد - فوق - لون أحمر"},
+  {n:"3",color:"#ffea00",desc:"دخل L2 - فوق وسط - أصفر"},
+  {n:"5",color:"#2979ff",desc:"دخل L3 - فوق يمين - أزرق"},
+  {n:"2",color:"#ff1744",desc:"خرج L1 للكونتاكتور L1_in - تحت"},
+  {n:"4",color:"#ffea00",desc:"خرج L2 للكونتاكتور L2_in"},
+  {n:"6",color:"#2979ff",desc:"خرج L3 للكونتاكتور L3_in"}
+ ],
+ func:"يحمي الكابل والموتور من زيادة التيار (Overload) ومن القفلة (Short). منحنى C يعني يفصل بعد 5-10 أضعاف التيار المقنن - مناسب للمواتير.",
+ dol:"أول عنصر بعد المصدر الموحد: مصدر L1 L2 L3 → MCB (1-3-5) → كونتاكتور (L1 L2 L3_in). لو حصل قفلة يفصل فورا.",
+ star:"في ستار دلتا: نفس الترتيب لكن بعديه 3 كونتاكتورات.",
+ tips:"اضغط عليه في الرسم يفصل/يوصل. لو مفصول المحاكاة تقول 'قاطع مفصول'. اختار أمبير مناسب: موتور 5.5kW → MCB 16A."
+},
+mcb_1p:{
+ title:"قاطع MCB أحادي 1P - دائرة الكنترول",
+ desc:"يحمي دائرة الكنترول فقط",
+ terms:[{n:"1",desc:"دخل L من مصدر 1 فاز"},{n:"2",desc:"خرج L لزرار STOP"}],
+ func:"حماية دائرة الكنترول (أزرار + ملف كونتاكتور). لو حصل قفلة في الكنترول يفصل وما يفصلش الباور.",
+ dol:"مصدر 1Ø → MCB 1P → STOP NC → START NO → A1. مهم جدا يبقى منفصل عن قاطع الباور.",
+ tips:"دايما خليه 2A أو 4A فقط للكنترول، مش 16A."
+},
+mccb_3p:{
+ title:"قاطع MCCB مولدد كيس 250A - أحمال كبيرة",
+ desc:"زي MCB لكن يتحمل تيارات عالية ويحتوي على حماية حرارية ومغناطيسية قابلة للضبط",
+ terms:[
+  {n:"LINE1",desc:"دخل L1 من بارات رئيسية"},
+  {n:"LINE2",desc:"دخل L2"},
+  {n:"LINE3",desc:"دخل L3"},
+  {n:"LOAD1",desc:"خرج للموتور الكبير أو لوحة فرعية"},
+  {n:"LOAD2",desc:"خرج"},
+  {n:"LOAD3",desc:"خرج"}
+ ],
+ func:"للأحمال فوق 100A - مواتير كبيرة، لوحات رئيسية. فيه بكرة ضبط Ir و Isd.",
+ dol:"يستخدم بدل MCB لو الموتور أكبر من 50kW.",
+ tips:"قابل للضبط: Ir = 0.8-1 x In للحماية الحرارية."
+},
+rccb_4p:{
+ title:"قاطع تسريب أرضي RCCB 4P 63A 30mA",
+ desc:"يحمي الإنسان من الصعق الكهربائي - يقيس الفرق بين التيار الراجع واللي رايح",
+ terms:[
+  {n:"1",desc:"دخل L1"},
+  {n:"3",desc:"دخل L2"},
+  {n:"5",desc:"دخل L3"},
+  {n:"N",desc:"دخل N - مهم جدا توصله"},
+  {n:"2",desc:"خرج L1 للحمل"},
+  {n:"4",desc:"خرج L2"},
+  {n:"6",desc:"خرج L3"},
+  {n:"N2",desc:"خرج N للحمل"},
+  {n:"T",desc:"زرار TEST برتقالي - اضغط كل شهر يفصل لو شغال"}
+ ],
+ func:"لو فيه تسريب 30mA (إنسان لمس كهربا) يفصل في 0.03 ثانية وينقذ حياته. ما يحميش من القفلة - لازم معاه MCB.",
+ dol:"يوصل بعد MCB وقبل الكونتاكتور: مصدر → MCB → RCCB → كونتاكتور → موتور. N لازم يمر من خلاله.",
+ tips:"زرار TEST لازم تجربه شهريا. لو الموتور فيه تسريب صغير (رطوبة) RCCB هيفصل - ده حماية مش عطل."
+},
+contactor:{
+ title:"كونتاكتور 3P + ملف تحكم A1/A2",
+ desc:"مفتاح كهرومغناطيسي يوصل الباور للموتور عند توصيل كهربا لملفه",
+ terms:[
+  {n:"L1",color:"#ff1744",desc:"دخل باور L1 من MCB - فوق شمال"},
+  {n:"L2",color:"#ffea00",desc:"دخل L2"},
+  {n:"L3",color:"#2979ff",desc:"دخل L3"},
+  {n:"T1",color:"#ff1744",desc:"خرج للموتور U - تحت شمال"},
+  {n:"T2",color:"#ffea00",desc:"خرج V"},
+  {n:"T3",color:"#2979ff",desc:"خرج W"},
+  {n:"A1",color:"#00e676",desc:"ملف الكنترول + - من زر START - لو وصله 220V يلقط الكونتاكتور ويعمل 🔊 تكة"},
+  {n:"A2",color:"#90a4ae",desc:"ملف الكنترول - يرجع لـ N - الدائرة تكمل"}
+ ],
+ func:"قلب دائرة DOL: لما تدوس START، 220V تروح A1/A2 → ملف يمغنط → يشد 3 نقط باور L→T → الموتور يشتغل. لما تدوس STOP ينقطع A1 → يفصل.",
+ dol:"دائرة الباور: MCB → L1 L2 L3 → T1 T2 T3 → موتور U V W. دائرة الكنترول: MCB 1P → STOP → START → A1، A2 → N. مع نقطة تعويض 13-14 من الكونتاكتور نفسه توازي START عشان يفضل لاقط.",
+ star:"في ستار دلتا: 3 كونتاكتورات: Main + Star + Delta. Main دايما لاقط، Star يلقط أول 5 ثواني، بعدين يفصل وDelta يلقط.",
+ tips:"اسمع صوت التكة 🔊 لما يلقط - ده صوت طبيعي. لو يزن وما يلقطش - الفولت قليل أو الملف محروق. نقطة مساعدة NO (13-14) مهمة عشان يفضل لاقط بعد ما تسيب START."
+},
+overload:{
+ title:"اوفرلود حراري F1",
+ desc:"يحمي الموتور من زيادة الحمل والسخونية - فيه شرائط ثنائية المعدن تسخن وتفصل",
+ terms:[
+  {n:"L1",desc:"دخل من كونتاكتور T1"},
+  {n:"L2",desc:"دخل T2"},
+  {n:"L3",desc:"دخل T3"},
+  {n:"T1",desc:"خرج للموتور U"},
+  {n:"T2",desc:"خرج V"},
+  {n:"T3",desc:"خرج W"},
+  {n:"95-96",desc:"نقطة NC - توصل توالي مع STOP - لو اوفرلود فصل، تفتح وتفصل الكنترول"},
+  {n:"97-98",desc:"نقطة NO - لمبة تريب"}
+ ],
+ func:"لو الموتور اتحمل زيادة (سير مشدود، بلي قافش) التيار يزيد → شريحة حرارية تسخن وتنحني → تفصل نقاط 95-96 → الكونتاكتور يفصل → الموتور يوقف قبل ما يتحرق.",
+ dol:"بعد الكونتاكتور مباشرة: كونتاكتور T1 T2 T3 → اوفرلود L1 L2 L3 → اوفرلود T1 T2 T3 → موتور. نقطة 95-96 توالي مع STOP.",
+ tips:"اضبط الأمبير على تيار الموتور المكتوب على لوحته. زرار RESET أحمر - بعد ما يبرد تدوسه. لو يفصل كتير - شوف سبب الحمل مش تعلي الأمبير."
+},
+pb_no:{
+ title:"زر تشغيل NO - أخضر START",
+ desc:"Normally Open - مفتوح في الوضع العادي، لما تدوس يقفل",
+ terms:[{n:"3",desc:"طرف 1 - من STOP"},{n:"4",desc:"طرف 2 - لـ A1 كونتاكتور + نقطة تعويض 13"}],
+ func:"يبدأ تشغيل الموتور. تدوس → يقفل → يوصل 220V لـ A1 → الكونتاكتور يلقط.",
+ dol:"توالي مع STOP: STOP (NC) → START (NO) → A1. مع نقطة تعويض NO من الكونتاكتور توازي START.",
+ tips:"لونه أخضر عالمي. اضغطه في المحاكاة يشتغل لحظي. لو معلق - النقطة لازقة."
+},
+pb_nc:{
+ title:"زر إيقاف NC - أحمر STOP / طوارئ",
+ desc:"Normally Closed - مقفول في العادي، لما تدوس يفتح",
+ terms:[{n:"1",desc:"من MCB 1P - دخل L"},{n:"2",desc:"خرج لـ START"}],
+ func:"يوقف الموتور. تدوس → يفتح → يقطع A1 → الكونتاكتور يفصل.",
+ dol:"أول عنصر في الكنترول بعد MCB: MCB → STOP NC → START NO → A1. لازم يبقى قبل START.",
+ tips:"لونه أحمر. في الطوارئ E-STOP يكون كبير وينور. لو عاوز توقف من مكانين - وصل 2 STOP توالي."
+},
+motor_3p:{
+ title:"موتور 3 فاز + PE - الحمل النهائي",
+ desc:"يحول الكهربا لحركة - فيه 3 ملفات U V W",
+ terms:[
+  {n:"U",color:"#ff1744",desc:"ملف 1 - من كونتاكتور T1 أو اوفرلود T1 - أحمر"},
+  {n:"V",color:"#ffea00",desc:"ملف 2 - T2 - أصفر"},
+  {n:"W",color:"#2979ff",desc:"ملف 3 - T3 - أزرق"},
+  {n:"PE",color:"#4caf50",desc:"أرضي جسم الموتور - أخضر مقطع - مهم جدا - من مصدر PE - لو ما وصلتوش وجسم الموتور كهرّب - الإنسان يتكهرب"}
+ ],
+ func:"لما يوصله 3 فاز 380V على U V W - المجال المغناطيسي الدوار يلف الروتر - الموتور يدور. الصوت 🔊 اللي تسمعه هو صوت الدوران.",
+ dol:"آخر عنصر: كونتاكتور T1 T2 T3 → (اوفرلود) → U V W. PE → جسم الموتور. لو عكست فازتين (U↔V) الموتور يلف عكس.",
+ star:"في ستار دلتا: الموتور 6 أطراف U1 V1 W1 U2 V2 W2. ستار: U2 V2 W2 مقفولين مع بعض، دلتا: U1-W2, V1-U2, W1-V2.",
+ tips:"PE أهم من الفازات للسلامة! دايما وصله. لو الموتور يزن وما يلفش - فازة ساقطة. لو يسخن - اوفرلود صغير أو حمل زيادة. صوت 🔊 في المحاكاة يشتغل فقط لو التوصيل صح."
+},
+lamp:{
+ title:"لمبة بيان H1",
+ desc:"تنور لما توصلها كهربا - للدلالة",
+ terms:[{n:"X1",desc:"فازة من نقطة مساعدة كونتاكتور NO أو من خرج"},{n:"X2",desc:"N - محايد"}],
+ func:"تبين حالة: موتور شغال / تريب / باور موجود.",
+ dol:"لمبة RUN: من نقطة مساعدة NO للكونتاكتور (13-14) → X1، X2→N. لما الكونتاكتور يلقط تنور.",
+ tips:"ألوان: أخضر RUN، أحمر FAULT/TRIP، أصفر READY."
+},
+vfd:{
+ title:"انفرتر VFD - مغير سرعة",
+ desc:"يحول 380V ثابت لـ 380V متغير التردد 0-400Hz - يتحكم في سرعة الموتور",
+ terms:[
+  {n:"R",desc:"دخل L1 من MCB"},
+  {n:"S",desc:"دخل L2"},
+  {n:"T",desc:"دخل L3"},
+  {n:"U",desc:"خرج للموتور U"},
+  {n:"V",desc:"خرج V"},
+  {n:"W",desc:"خرج W"},
+  {n:"PE",desc:"أرضي - دخل وخرج"}
+ ],
+ func:"بدل ما الموتور يدور 1400 لفة ثابتة، VFD يخليه 0-1400 حسب ما تظبط. يوفر كهربا ويحمي من تيار البدء.",
+ dol:"بديل للكونتاكتور في بعض الحالات: مصدر → MCB → VFD R S T → موتور U V W. الكنترول من أزرار VFD نفسه.",
+ tips:"لازم كابل مسلح بين VFD والموتور. ما توصلش كونتاكتور بين VFD والموتور وهو شغال."
+},
+plc_logo:{
+ title:"PLC LOGO! 8 - عقل اللوحة الذكي",
+ desc:"كمبيوتر صناعي صغير - تبرمجه بدل ما توصل أزرار وتايمرات كتير",
+ terms:[
+  {n:"L1",desc:"تغذية 220V L"},
+  {n:"N",desc:"تغذية N"},
+  {n:"I1",desc:"دخل رقمي 1 - زر START"},
+  {n:"I2",desc:"دخل 2 - STOP"},
+  {n:"I3",desc:"دخل 3 - حساس"},
+  {n:"I4",desc:"دخل 4"},
+  {n:"Q1",desc:"خرج ريلاي 1 - كونتاكتور 1"},
+  {n:"Q2",desc:"خرج 2 - كونتاكتور 2"},
+  {n:"Q3",desc:"خرج 3 - لمبة"},
+  {n:"Q4",desc:"خرج 4"}
+ ],
+ func:"بدل دائرة DOL التقليدية بـ أزرار وتايمرات، توصل الأزرار لـ I1 I2، والكونتاكتورات لـ Q1 Q2، وتبرمج المنطق جوه LOGO!.",
+ dol:"بديل كامل: I1=START, I2=STOP, Q1=كونتاكتور. البرنامج: Q1 = (I1 OR Q1) AND NOT I2.",
+ tips:"يوفر أسلاك كتير. فيه تايمرات وعدادات جواه."
+}
 };
 
-// تعميم لكل الأنواع المشابهة
-["supply_pe","supply_n","busbar"].forEach(k=>{ if(!TERMINALS[k]) TERMINALS[k]=[{n:"1",x:50,y:0},{n:"2",x:50,y:100}]; });
-["mcb_2p","mcb_4p","timer_on","timer_off","phase_monitor","psu_24v","transformer","voltmeter","ammeter","buzzer"].forEach(k=>{ if(!TERMINALS[k]) TERMINALS[k]=TERMINALS["mcb_3p"]; });
-["mccb_4p","rcbo","rccb_2p"].forEach(k=>{ if(!TERMINALS[k]) TERMINALS[k]=TERMINALS["mccb_3p"]||TERMINALS["rccb_4p"]; });
-["motor_1p","generator_3ph","selector","limit_switch","proximity","pb_emergency"].forEach(k=>{ if(!TERMINALS[k]) TERMINALS[k]=TERMINALS["motor_3p"]||TERMINALS["pb_no"]; });
-
-// =============== قاعدة بيانات جميع العناصر ===============
-const COMPS = {
-supply_3pnpe:{ar:"مصدر موحد 3Ø+N+PE",cat:"power",iec:"L1 L2 L3 N PE",free:true,img:IMAGE_LINKS.supply_3pnpe},
-supply_1pnpe:{ar:"مصدر 1Ø+N+PE",cat:"power",iec:"L1 N PE",free:true,img:IMAGE_LINKS.supply_1pnpe},
-supply_pe:{ar:"PE أرضي منفصل",cat:"power",iec:"PE",free:true,img:IMAGE_LINKS.supply_pe},
-supply_n:{ar:"N محايد منفصل",cat:"power",iec:"N",free:true,img:IMAGE_LINKS.supply_n},
-generator_dse:{ar:"مولد ديزل DSE5110",cat:"power",iec:"G1",free:true,img:IMAGE_LINKS.generator_dse,sound:"generator",type:"gen"},
-generator_3ph:{ar:"مولد 3Ø كارت",cat:"power",iec:"G",free:true,img:IMAGE_LINKS.generator_3ph,sound:"generator",type:"gen"},
-mcb_1p:{ar:"MCB 1P C16",cat:"protection",iec:"Q1 1P",free:true,img:IMAGE_LINKS.mcb_1p,type:"breaker"},
-mcb_2p:{ar:"MCB 2P C32",cat:"protection",iec:"Q1 2P",free:true,img:IMAGE_LINKS.mcb_2p,type:"breaker"},
-mcb_3p:{ar:"MCB 3P C63",cat:"protection",iec:"Q1 3P",free:true,img:IMAGE_LINKS.mcb_3p,type:"breaker"},
-mcb_4p:{ar:"MCB 4P C63+N",cat:"protection",iec:"Q1 4P",free:true,img:IMAGE_LINKS.mcb_4p,type:"breaker"},
-mccb_3p:{ar:"MCCB 3P 250A",cat:"protection",iec:"Q2 250A",free:false,img:IMAGE_LINKS.mccb_3p,type:"breaker"},
-mccb_4p:{ar:"MCCB 4P 250A+N",cat:"protection",iec:"Q2 4P",free:false,img:IMAGE_LINKS.mccb_4p,type:"breaker"},
-rccb_2p:{ar:"RCCB 2P 63A 30mA",cat:"protection",iec:"Q3 TypeB",free:false,img:IMAGE_LINKS.rccb_2p,type:"breaker"},
-rccb_4p:{ar:"RCCB 4P 63A 30mA",cat:"protection",iec:"Q3 TypeB",free:false,img:IMAGE_LINKS.rccb_4p,type:"breaker"},
-rcbo:{ar:"RCBO C32+30mA",cat:"protection",iec:"Q3 RCBO",free:false,img:IMAGE_LINKS.rcbo,type:"breaker"},
-contactor:{ar:"كونتاكتور 3P",cat:"control",iec:"K1 KM",free:true,img:IMAGE_LINKS.contactor,type:"km"},
-overload:{ar:"اوفرلود حراري",cat:"control",iec:"F1 OL",free:true,img:IMAGE_LINKS.overload,type:"ol"},
-timer_on:{ar:"تايمر ON Delay",cat:"control",iec:"KT ON",free:false,img:IMAGE_LINKS.timer_on,type:"timer"},
-timer_off:{ar:"تايمر OFF Delay",cat:"control",iec:"KT OFF",free:false,img:IMAGE_LINKS.timer_off,type:"timer"},
-phase_monitor:{ar:"مراقب فازات",cat:"control",iec:"K2 Ph",free:false,img:IMAGE_LINKS.phase_monitor,type:"km"},
-pb_no:{ar:"زر تشغيل NO أخضر",cat:"control",iec:"S1 START",free:true,img:IMAGE_LINKS.pb_no,type:"pb_no"},
-pb_nc:{ar:"زر إيقاف NC أحمر",cat:"control",iec:"S0 STOP",free:true,img:IMAGE_LINKS.pb_nc,type:"pb_nc"},
-pb_emergency:{ar:"مفتاح طوارئ E-STOP",cat:"control",iec:"S2 E-STOP",free:true,img:IMAGE_LINKS.pb_emergency,type:"pb_nc"},
-selector:{ar:"مفتاح سليكتور",cat:"control",iec:"S3 SEL",free:true,img:IMAGE_LINKS.selector,type:"sel"},
-limit_switch:{ar:"مفتاح نهاية شوط",cat:"control",iec:"SQ Limit",free:true,img:IMAGE_LINKS.limit_switch,type:"pb_no"},
-proximity:{ar:"حساس تقاربي",cat:"control",iec:"B1 Sensor",free:false,img:IMAGE_LINKS.proximity,type:"sensor"},
-motor_3p:{ar:"موتور 3Ø + PE",cat:"power",iec:"M1 3~",free:true,img:IMAGE_LINKS.motor_3p,type:"motor",sound:"motor"},
-motor_1p:{ar:"موتور 1Ø",cat:"power",iec:"M 1~",free:true,img:IMAGE_LINKS.motor_1p,type:"motor",sound:"motor"},
-lamp:{ar:"لمبة بيان",cat:"power",iec:"H1",free:true,img:IMAGE_LINKS.lamp,type:"lamp"},
-buzzer:{ar:"جرس / سرينة",cat:"power",iec:"HA Buzzer",free:true,img:IMAGE_LINKS.buzzer,type:"lamp",sound:"buzzer"},
-psu_24v:{ar:"باور سبلاي 24V",cat:"power",iec:"U2 PSU",free:false,img:IMAGE_LINKS.psu_24v},
-vfd:{ar:"انفرتر VFD",cat:"power",iec:"U1 VFD",free:false,img:IMAGE_LINKS.vfd,type:"vfd",sound:"vfd"},
-plc_logo:{ar:"PLC LOGO! 8",cat:"plc",iec:"PLC LOGO",free:false,img:IMAGE_LINKS.plc_logo,type:"plc"},
-busbar:{ar:"بارة توزيع",cat:"power",iec:"Bus",free:true,img:IMAGE_LINKS.busbar},
-voltmeter:{ar:"فولتميتر",cat:"power",iec:"P1 V",free:true,img:IMAGE_LINKS.voltmeter},
-ammeter:{ar:"أميتر",cat:"power",iec:"P2 A",free:true,img:IMAGE_LINKS.ammeter}
+const COMPS={
+supply_3pnpe:{ar:"مصدر موحد 3Ø+N+PE",cat:"power",iec:"L1 L2 L3 N PE",img:IMGS.supply},
+supply_1pnpe:{ar:"مصدر 1Ø+N+PE",cat:"power",iec:"L1 N PE",img:IMGS.supply},
+generator_dse:{ar:"مولد DSE 5110 ديزل",cat:"power",iec:"G DSE",img:IMGS.generator,type:"gen",sound:"generator"},
+mcb_1p:{ar:"MCB 1P C16",cat:"protection",iec:"Q1 1P",img:IMGS.mcb,type:"breaker"},
+mcb_3p:{ar:"MCB 3P C63",cat:"protection",iec:"Q1 3P",img:IMGS.mcb,type:"breaker"},
+mccb_3p:{ar:"MCCB 3P 250A",cat:"protection",iec:"Q2 250A",img:IMGS.mccb,type:"breaker"},
+rccb_4p:{ar:"RCCB 4P 30mA",cat:"protection",iec:"Q3 RCCB",img:IMGS.rccb,type:"breaker"},
+contactor:{ar:"كونتاكتور KM",cat:"control",iec:"K1 KM",img:IMGS.contactor,type:"km"},
+overload:{ar:"اوفرلود OL",cat:"control",iec:"F1 OL",img:IMGS.overload,type:"ol"},
+pb_no:{ar:"زر تشغيل START NO",cat:"control",iec:"S1 START",img:IMGS.pb_no,type:"pb_no"},
+pb_nc:{ar:"زر إيقاف STOP NC",cat:"control",iec:"S0 STOP",img:IMGS.pb_nc,type:"pb_nc"},
+motor_3p:{ar:"موتور 3Ø + PE",cat:"power",iec:"M1 3~",img:IMGS.motor,type:"motor",sound:"motor"},
+lamp:{ar:"لمبة بيان H1",cat:"power",iec:"H1",img:IMGS.lamp,type:"lamp"},
+vfd:{ar:"انفرتر VFD",cat:"power",iec:"U1 VFD",img:IMGS.vfd,type:"vfd",sound:"vfd"},
+plc_logo:{ar:"PLC LOGO! 8",cat:"plc",iec:"PLC",img:IMGS.plc,type:"plc"}
 };
 
-let board=[], wires=[], pending=null, history=[], displayMode='iec', soundOn=true, simOn=false, audioCtx=null, loops={};
+let board=[], wires=[], pending=null, history=[], disp='real', soundOn=true, simOn=false, audioCtx=null, loops={};
+let TERMINALS={
+supply_3pnpe:[{n:"L1",x:15,y:0},{n:"L2",x:35,y:0},{n:"L3",x:55,y:0},{n:"N",x:75,y:0},{n:"PE",x:90,y:100}],
+supply_1pnpe:[{n:"L1",x:25,y:0},{n:"N",x:55,y:0},{n:"PE",x:85,y:0}],
+generator_dse:[{n:"L1",x:15,y:0},{n:"L2",x:35,y:0},{n:"L3",x:55,y:0},{n:"N",x:75,y:0},{n:"PE",x:90,y:100}],
+mcb_1p:[{n:"1",x:50,y:0},{n:"2",x:50,y:100}],
+mcb_3p:[{n:"1",x:15,y:0},{n:"3",x:50,y:0},{n:"5",x:85,y:0},{n:"2",x:15,y:100},{n:"4",x:50,y:100},{n:"6",x:85,y:100}],
+mccb_3p:[{n:"L1",x:20,y:0},{n:"L2",x:50,y:0},{n:"L3",x:80,y:0},{n:"T1",x:20,y:100},{n:"T2",x:50,y:100},{n:"T3",x:80,y:100}],
+rccb_4p:[{n:"1",x:15,y:0},{n:"3",x:35,y:0},{n:"5",x:55,y:0},{n:"N",x:80,y:0},{n:"2",x:15,y:100},{n:"4",x:35,y:100},{n:"6",x:55,y:100},{n:"N2",x:80,y:100}],
+contactor:[{n:"L1",x:15,y:0},{n:"L2",x:35,y:0},{n:"L3",x:55,y:0},{n:"A1",x:85,y:0},{n:"T1",x:15,y:100},{n:"T2",x:35,y:100},{n:"T3",x:55,y:100},{n:"A2",x:85,y:100}],
+overload:[{n:"L1",x:15,y:0},{n:"L2",x:50,y:0},{n:"L3",x:85,y:0},{n:"T1",x:15,y:100},{n:"T2",x:50,y:100},{n:"T3",x:85,y:100}],
+pb_no:[{n:"3",x:20,y:0},{n:"4",x:80,y:0}],
+pb_nc:[{n:"1",x:20,y:0},{n:"2",x:80,y:0}],
+motor_3p:[{n:"U",x:15,y:0},{n:"V",x:40,y:0},{n:"W",x:65,y:0},{n:"PE",x:90,y:0}],
+lamp:[{n:"X1",x:25,y:0},{n:"X2",x:75,y:0}],
+vfd:[{n:"R",x:15,y:0},{n:"S",x:30,y:0},{n:"T",x:45,y:0},{n:"U",x:15,y:100},{n:"V",x:30,y:100},{n:"W",x:45,y:100},{n:"PE",x:85,y:50}],
+plc_logo:[{n:"L1",x:20,y:0},{n:"N",x:50,y:0},{n:"I1",x:0,y:25},{n:"I2",x:0,y:40},{n:"I3",x:0,y:55},{n:"Q1",x:100,y:25},{n:"Q2",x:100,y:40}]
+};
+["supply_3pnpe","supply_1pnpe","generator_dse","mcb_1p","mcb_3p","mccb_3p","rccb_4p","contactor","overload","pb_no","pb_nc","motor_3p","lamp","vfd","plc_logo"].forEach(k=>{ if(!TERMINALS[k]) TERMINALS[k]=[{n:"1",x:50,y:0},{n:"2",x:50,y:100}]; });
 
 function initAudio(){ if(!audioCtx) audioCtx=new (window.AudioContext||window.webkitAudioContext)(); }
-function play(type,loop=false,id=null){
- if(!soundOn) return; initAudio(); if(audioCtx.state==='suspended') audioCtx.resume();
- const o=audioCtx.createOscillator(), g=audioCtx.createGain(); o.connect(g); g.connect(audioCtx.destination);
- let f=440,d=0.2; if(type==='click'){f=1200;d=0.06} else if(type==='breaker'){f=280;d=0.3;o.type='sawtooth';g.gain.value=0.6} else if(type==='motor'){f=75;d=loop?999:0.8;o.type='sawtooth';g.gain.value=0.22} else if(type==='generator'){f=55;d=loop?999:1;o.type='sawtooth';g.gain.value=0.28} else if(type==='contactor'){f=110;d=0.4;o.type='square';g.gain.value=0.7}
- o.frequency.value=f; o.start(); if(!loop) o.stop(audioCtx.currentTime+d); else if(id){ if(loops[id]) try{loops[id].stop()}catch{} loops[id]=o; }
-}
+function play(t,loop=false,id=null){ if(!soundOn) return; initAudio(); if(audioCtx.state==='suspended') audioCtx.resume(); const o=audioCtx.createOscillator(),g=audioCtx.createGain(); o.connect(g); g.connect(audioCtx.destination); let f=440,d=0.2; if(t==='click'){f=1200;d=0.06} else if(t==='breaker'){f=280;d=0.3;o.type='sawtooth';g.gain.value=0.6} else if(t==='motor'){f=75;d=loop?999:0.8;o.type='sawtooth';g.gain.value=0.22} else if(t==='generator'){f=55;d=loop?999:1;o.type='sawtooth';g.gain.value=0.28} else if(t==='contactor'){f=110;d=0.4;o.type='square';g.gain.value=0.7} o.frequency.value=f; o.start(); if(!loop) o.stop(audioCtx.currentTime+d); else if(id){ if(loops[id]) try{loops[id].stop()}catch{} loops[id]=o; } }
 function stop(id){ if(loops[id]){ try{loops[id].stop()}catch{} delete loops[id]; } }
 function stopAll(){ Object.keys(loops).forEach(stop); }
 
 function renderPalette(){
  const pal=document.getElementById("palette"); const q=(document.getElementById("search").value||"").toLowerCase();
  pal.innerHTML="";
- const cats={}; Object.entries(COMPS).forEach(([id,inf])=>{ if(q && !(id.includes(q)||inf.ar.includes(q)||inf.iec.toLowerCase().includes(q))) return; if(!cats[inf.cat]) cats[inf.cat]=[]; cats[inf.cat].push([id,inf]); });
- const names={power:"⚡ المصادر والمحركات",protection:"🛡️ الحماية MCB/MCCB/RCCB",control:"⚙️ التحكم - كونتاكتور تايمر أزرار",plc:"🧠 PLC وانفرتر"};
+ const cats={}; Object.entries(COMPS).forEach(([id,inf])=>{ if(q && !(id.includes(q)||inf.ar.includes(q))) return; if(!cats[inf.cat]) cats[inf.cat]=[]; cats[inf.cat].push([id,inf]); });
+ const names={power:"⚡ المصادر والمحركات",protection:"🛡️ الحماية",control:"⚙️ التحكم",plc:"🧠 PLC"};
  Object.entries(cats).forEach(([cat,items])=>{
   const d=document.createElement("div"); d.className="cat";
   d.innerHTML=`<div class="cat-h" onclick="this.nextElementSibling.style.display=this.nextElementSibling.style.display==='none'?'grid':'none'"><span>${names[cat]||cat} (${items.length})</span><span>▼</span></div><div class="cat-b"></div>`;
   const body=d.querySelector(".cat-b");
   items.forEach(([id,inf])=>{
    const c=document.createElement("div"); c.className="comp-card";
-   const imgSrc=inf.img||"";
-   c.innerHTML=`<img src="${imgSrc}" onerror="this.src='https://via.placeholder.com/120x60?text=${inf.iec}'" style="width:100%;height:52px;object-fit:contain;background:#080a0c;border-radius:6px"><div style="font-size:10px;font-weight:bold">${inf.iec}</div><div style="font-size:9px;color:#8a8f9a">${inf.ar}</div><button class="btn btn-orange" style="width:100%;padding:4px;font-size:10px" onclick="addComp('${id}')">+ إضافة</button>`;
+   c.innerHTML=`<img src="${inf.img}" onerror="this.src='https://via.placeholder.com/120x50?text=${inf.iec}'"><div style="font-size:10px;font-weight:bold">${inf.iec}</div><div style="font-size:9px;color:#8a8f9a">${inf.ar}</div><div style="display:flex;gap:3px;width:100%"><button class="btn btn-orange" style="flex:1;padding:3px;font-size:9px" onclick="addComp('${id}')">+ إضافة</button><button class="btn" style="flex:1;padding:3px;font-size:9px" onclick="showInfo('${id}')">ℹ️ شرح</button></div>`;
    body.appendChild(c);
   });
   pal.appendChild(d);
  });
- document.getElementById("linksCode").textContent=JSON.stringify(IMAGE_LINKS,null,2);
 }
 
 function addComp(id){
  const uid="c"+Date.now()+Math.floor(Math.random()*999);
  board.push({uid,type:id,x:40+Math.random()*260,y:40+Math.random()*180,w:142,h:88,state:{closed:true,pressed:false,running:false,energized:false,latched:false}});
  document.getElementById("hint").style.display="none";
- renderBoard(); play(inf=>COMPS[id].sound||"click");
+ renderBoard();
 }
 
 function getPos(comp, tName){
- const list=TERMINALS[comp.type]||TERMINALS[comp.type.replace(/_.*/, "")]||[{n:tName,x:50,y:0}];
+ const list=TERMINALS[comp.type]||[{n:tName,x:50,y:0}];
  let t=list.find(x=>x.n===tName)||list[0];
  return {x: comp.x + comp.w*t.x/100, y: comp.y + comp.h*t.y/100};
 }
@@ -292,125 +439,106 @@ function renderBoard(){
  board.forEach(c=>{
   const inf=COMPS[c.type];
   const el=document.createElement("div"); el.className="canvas-comp"+(c.state.running?" running":""); el.style.left=c.x+"px"; el.style.top=c.y+"px"; el.style.width=c.w+"px"; el.style.height=c.h+"px"; el.id=c.uid;
-  let imgHtml="";
-  if(displayMode==='real' || displayMode==='both'){
-   imgHtml=`<div class="img-wrap"><img src="${inf.img}" onerror="this.style.background='#222'" alt="${inf.iec}"></div>`;
-  }
-  let iecHtml="";
-  if(displayMode==='iec' || displayMode==='both'){
-   iecHtml=`<div style="background:${displayMode==='both'?'#0f1419':'#12161c'};padding:${displayMode==='both'?'2px':'10px'};text-align:center;font-weight:bold;font-size:${displayMode==='both'?'8px':'11px'};border-top:${displayMode==='both'?'1px solid #222':'none'}">${inf.iec}</div>`;
-  }
-  // بورد نضيف تماما - بدون أزرار داخلية - الضغط على العنصر نفسه للتشغيل
-  el.innerHTML=`
-   ${imgHtml}
-   ${iecHtml}
-   <div class="label">${inf.ar}</div>
-  `;
+  let imgHtml=`<div class="img-wrap"><img src="${inf.img}" alt="${inf.iec}"><button style="position:absolute;top:2px;left:2px;background:#1976d2;color:#fff;border:none;padding:2px 5px;border-radius:10px;font-size:9px" onclick="event.stopPropagation(); showInfoBoard('${c.uid}')">ℹ️</button></div>`;
+  let iecHtml=`<div style="background:#111418;padding:4px;text-align:center;font-weight:bold;font-size:10px">${inf.iec}</div>`;
+  let content = disp==='real'? imgHtml : disp==='iec'? iecHtml : imgHtml+iecHtml;
+  el.innerHTML=content+`<div class="label">${inf.ar} - اضغط ℹ️ للشرح</div>`;
   el.addEventListener('pointerdown', e=>{ if(e.target.classList.contains('term')) return; startDrag(e,c.uid); });
-  el.addEventListener('click', e=>{ if(e.target.classList.contains('term')) return; handleClick(c.uid); });
-  // terminals
+  el.addEventListener('click', e=>{ if(e.target.classList.contains('term')||e.target.tagName==='BUTTON') return; showInfoBoard(c.uid); });
+  el.addEventListener('dblclick', e=>{ handleOp(c.uid); });
   (TERMINALS[c.type]||[]).forEach(term=>{
    const p=getPos(c,term.n);
-   const te=document.createElement("div"); te.className="term"+(wires.some(w=> (w.from.comp===c.uid&&w.from.term===term.n)||(w.to.comp===c.uid&&w.to.term===term.n))?" connected":"")+(term.n==="PE"?" pe":"");
-   te.style.left=(p.x-c.x-7)+"px"; te.style.top=(p.y-c.y-7)+"px"; te.title=term.n;
+   const te=document.createElement("div"); te.className="term"+(wires.some(w=> (w.from.comp===c.uid&&w.from.term===term.n)||(w.to.comp===c.uid&&w.to.term===term.n))?" connected":"")+(term.n==="PE"?" pe":term.n==="N"?" n":term.n==="L1"||term.n==="U"||term.n==="1"||term.n==="R"?" l1":term.n==="L2"||term.n==="V"||term.n==="3"||term.n==="S"?" l2":term.n==="L3"||term.n==="W"||term.n==="5"||term.n==="T"?" l3":"");
+   te.style.left=(p.x-c.x-9)+"px"; te.style.top=(p.y-c.y-9)+"px";
    te.onclick=e=>{ e.stopPropagation(); termClick(c.uid,term.n); };
-   const lbl=document.createElement("div"); lbl.style.cssText="position:absolute;top:-13px;left:50%;transform:translateX(-50%);font-size:7px;background:#111;padding:1px 2px;border-radius:3px;white-space:nowrap"; lbl.innerText=term.n;
+   const lbl=document.createElement("div"); lbl.className="term-badge"; lbl.innerText=term.n;
    te.appendChild(lbl); el.appendChild(te);
   });
   b.appendChild(el);
  });
  renderWires();
- document.getElementById("count").innerText=`${board.length} عنصر • ${wires.length} سلك`;
+ document.getElementById("cnt").innerText=`${board.length} عنصر • ${wires.length} سلك`;
 }
 
-function handleClick(uid){
+function showInfo(type){
+ const det=DETAILS[type]||DETAILS[Object.keys(DETAILS).find(k=>type.includes(k.split('_')[0]))]||{title:COMPS[type]?.ar||type,desc:"لا يوجد شرح مفصل",terms:[]};
+ openInfoModal(det, type);
+}
+function showInfoBoard(uid){
+ const c=board.find(x=>x.uid===uid); showInfo(c.type);
+}
+function openInfoModal(det, type){
+ const modal=document.getElementById("infoModal");
+ document.getElementById("infoTitle").innerText=det.title||type;
+ let html=`
+ <div style="display:flex;gap:12px;flex-wrap:wrap;margin-bottom:12px">
+  <img src="${det.img||COMPS[type]?.img||''}" style="width:220px;height:130px;object-fit:contain;background:#080a0c;border-radius:10px;border:1px solid #222">
+  <div style="flex:1;min-width:260px">
+   <div class="info-card"><b>📝 وصف القطعة:</b><div style="font-size:12px;line-height:1.7;margin-top:6px">${det.desc||''}</div></div>
+   <div class="info-card" style="margin-top:8px"><b>⚙️ وظيفتها:</b><div style="font-size:12px;line-height:1.7;margin-top:6px">${det.func||''}</div></div>
+  </div>
+ </div>
+ <div class="tabs">
+  <button class="tab active" onclick="switchTab(0)">📍 نقاط التوصيل - فين وبتعمل إيه</button>
+  <button class="tab" onclick="switchTab(1)">⚡ مكانها في DOL</button>
+  <button class="tab" onclick="switchTab(2)">⭐ مكانها في ستار دلتا</button>
+  <button class="tab" onclick="switchTab(3)">💡 نصائح + صورة تشريحية</button>
+ </div>
+ <div id="tab0">
+  <div class="info-grid">
+   ${(det.terms||[]).map(t=>`<div class="info-card" style="border-right:4px solid ${t.color||'#ff6b00'}"><b style="color:${t.color||'#ff6b00'}">🔌 ${t.n}</b> <span style="background:#111;padding:2px 6px;border-radius:4px;font-size:10px;margin-right:6px">${t.pos||''}</span><div style="font-size:11px;line-height:1.6;margin-top:6px">${t.desc}</div></div>`).join('')}
+  </div>
+  ${(det.parts||[]).length? `<div style="margin-top:12px"><b>🔧 تشريح القطعة (زي صورة المولد):</b><div class="info-grid" style="margin-top:8px">${det.parts.map(p=>`<div class="info-card"><b>${p.icon||'🔹'} ${p.name}</b><div style="font-size:11px;line-height:1.6;margin-top:4px">${p.desc}</div></div>`).join('')}</div></div>`:''}
+ </div>
+ <div id="tab1" style="display:none"><div class="info-card"><b>⚡ دائرة DOL - Direct On Line:</b><div style="font-size:12px;line-height:1.8;margin-top:8px;white-space:pre-line">${det.dol||'غير محدد لهذه القطعة'}</div><div style="margin-top:10px;background:#0f1419;padding:8px;border-radius:6px;font-size:11px">مخطط DOL: مصدر 3Ø+N+PE → MCB 3P → كونتاكتور → اوفرلود → موتور. الكنترول: MCB 1P → STOP NC → START NO → A1 كونتاكتور، A2 → N. لمبة RUN من نقطة مساعدة 13-14.</div></div></div>
+ <div id="tab2" style="display:none"><div class="info-card"><b>⭐ دائرة ستار دلتا:</b><div style="font-size:12px;line-height:1.8;margin-top:8px;white-space:pre-line">${det.star||'في ستار دلتا: 3 كونتاكتورات Main, Star, Delta + تايمر. البدء ستار لتقليل تيار البدء ثم دلتا للتشغيل الكامل.'}</div><div style="margin-top:10px;background:#0f1419;padding:8px;border-radius:6px;font-size:11px">Main: يغذي الموتور دايما. Star: يقفل U2 V2 W2 مع بعض أول 5 ثواني. Delta: بعد التايمر يقفل U1-W2, V1-U2, W1-V2.</div></div></div>
+ <div id="tab3" style="display:none"><div class="info-card"><b>💡 نصائح فنية:</b><div style="font-size:12px;line-height:1.8;margin-top:8px;white-space:pre-line">${det.tips||''}</div><div style="margin-top:10px"><b>📸 صورة تشريحية:</b><div style="background:#080a0c;border-radius:10px;padding:10px;margin-top:6px;text-align:center"><img src="${det.img||COMPS[type]?.img||''}" style="max-width:100%;max-height:300px;object-fit:contain"><div style="font-size:10px;color:#8a8f9a;margin-top:6px">الصورة توضح نقاط التوصيل الحقيقية - لاحظ الألوان: L1 أحمر، L2 أصفر، L3 أزرق، N سماوي، PE أخضر</div></div></div></div></div>
+ `;
+ document.getElementById("infoBody").innerHTML=html;
+ modal.classList.add("show");
+ window.switchTab=(n)=>{
+  document.querySelectorAll('.tab').forEach((t,i)=>t.classList.toggle('active',i===n));
+  [0,1,2,3].forEach(i=>{ const el=document.getElementById('tab'+i); if(el) el.style.display=i===n?'block':'none'; });
+ };
+}
+function closeInfo(){ document.getElementById("infoModal").classList.remove("show"); }
+
+function handleOp(uid){
  const c=board.find(x=>x.uid===uid); const inf=COMPS[c.type];
  if(inf.type==="breaker"){ c.state.closed=!c.state.closed; play("breaker"); }
  else if(inf.type==="pb_no"||inf.type==="pb_nc"){ c.state.pressed=true; play("click"); setTimeout(()=>{ c.state.pressed=false; renderBoard(); if(simOn) runSim(); },400); }
- else if(inf.type==="sel"){ c.state.closed=!c.state.closed; play("click"); }
  renderBoard(); if(simOn) runSim();
 }
-
 function termClick(comp, term){
  if(!pending){ pending={comp,term}; document.getElementById("fault").innerText=`اخترت ${term} - اختر الثاني`; return; }
  if(pending.comp!==comp || pending.term!==term){
   const exists=wires.some(w=> (w.from.comp===pending.comp&&w.from.term===pending.term&&w.to.comp===comp&&w.to.term===term)||(w.to.comp===pending.comp&&w.to.term===pending.term&&w.from.comp===comp&&w.from.term===term));
   if(!exists){ history.push([...wires]); wires.push({from:{...pending},to:{comp,term}}); play("click"); }
  }
- pending=null; document.getElementById("fault").innerText="تم التوصيل ✓"; renderBoard();
- if(simOn) runSim();
+ pending=null; document.getElementById("fault").innerText="تم ✓"; renderBoard(); if(simOn) runSim();
 }
-
 function renderWires(){
  const svg=document.getElementById("svg"); svg.innerHTML="";
  wires.forEach((w,i)=>{
   const c1=board.find(x=>x.uid===w.from.comp), c2=board.find(x=>x.uid===w.to.comp); if(!c1||!c2) return;
   const p1=getPos(c1,w.from.term), p2=getPos(c2,w.to.term); const mx=(p1.x+p2.x)/2;
   const d=`M ${p1.x} ${p1.y} C ${mx} ${p1.y}, ${mx} ${p2.y}, ${p2.x} ${p2.y}`;
-  const mk=cls=>{ const p=document.createElementNS("http://www.w3.org/2000/svg","path"); p.setAttribute("d",d); p.setAttribute("class","wire-path "+cls); p.style.pointerEvents="stroke"; p.onclick=()=>delWire(i); return p; };
-  let cls="ctrl";
-  if(w.from.term==="PE"||w.to.term==="PE") cls="pe"; else if(w.from.term==="N"||w.to.term==="N"||w.from.term.includes("N")||w.to.term.includes("N")) cls="n";
-  else if(w.from.term==="L1"||w.to.term==="L1"||w.from.term==="U"||w.from.term==="1"||w.from.term==="R") cls="l1";
-  else if(w.from.term==="L2"||w.to.term==="L2"||w.from.term==="V"||w.from.term==="S") cls="l2";
-  else if(w.from.term==="L3"||w.to.term==="L3"||w.from.term==="W"||w.from.term==="T") cls="l3";
-  const hit=document.createElementNS("http://www.w3.org/2000/svg","path"); hit.setAttribute("d",d); hit.setAttribute("fill","none"); hit.setAttribute("stroke","transparent"); hit.setAttribute("stroke-width","14"); hit.style.pointerEvents="stroke"; hit.style.cursor="pointer"; hit.onclick=()=>delWire(i);
-  svg.appendChild(hit); svg.appendChild(mk(cls));
+  let cls="ctrl"; if(w.from.term==="PE"||w.to.term==="PE") cls="pe"; else if(w.from.term==="N"||w.to.term.includes("N")) cls="n"; else if(w.from.term==="L1"||w.to.term==="L1"||w.from.term==="U"||w.from.term==="1"||w.from.term==="R") cls="l1"; else if(w.from.term==="L2"||w.to.term==="L2"||w.from.term==="V"||w.from.term==="S") cls="l2"; else if(w.from.term==="L3"||w.to.term==="L3"||w.from.term==="W"||w.from.term==="T") cls="l3";
+  const hit=document.createElementNS("http://www.w3.org/2000/svg","path"); hit.setAttribute("d",d); hit.setAttribute("fill","none"); hit.setAttribute("stroke","transparent"); hit.setAttribute("stroke-width","14"); hit.style.pointerEvents="stroke"; hit.style.cursor="pointer"; hit.onclick=()=>{ history.push([...wires]); wires.splice(i,1); renderBoard(); };
+  const path=document.createElementNS("http://www.w3.org/2000/svg","path"); path.setAttribute("d",d); path.setAttribute("class","wire-path "+cls); path.style.pointerEvents="stroke"; path.onclick=()=>{ history.push([...wires]); wires.splice(i,1); renderBoard(); };
+  svg.appendChild(hit); svg.appendChild(path);
  });
 }
-
-function delWire(i){ history.push([...wires]); wires.splice(i,1); renderBoard(); if(simOn) runSim(); }
-function undoWire(){ if(history.length){ wires=history.pop(); renderBoard(); } else if(wires.length){ wires.pop(); renderBoard(); } }
-function clearWires(){ if(confirm("مسح كل الأسلاك؟")){ history.push([...wires]); wires=[]; renderBoard(); } }
-
 let drag=null;
-function startDrag(e,uid){
- e.preventDefault(); const c=board.find(b=>b.uid===uid); const el=document.getElementById(uid); if(el) el.classList.add("dragging");
- drag={uid,sx:e.clientX,sy:e.clientY,ox:c.x,oy:c.y,c}; document.addEventListener('pointermove',move); document.addEventListener('pointerup',up);
-}
+function startDrag(e,uid){ e.preventDefault(); const c=board.find(b=>b.uid===uid); const el=document.getElementById(uid); if(el) el.classList.add("dragging"); drag={uid,sx:e.clientX,sy:e.clientY,ox:c.x,oy:c.y,c}; document.addEventListener('pointermove',move); document.addEventListener('pointerup',up); }
 function move(e){ if(!drag) return; drag.c.x=drag.ox+e.clientX-drag.sx; drag.c.y=drag.oy+e.clientY-drag.sy; const el=document.getElementById(drag.uid); if(el){ el.style.left=drag.c.x+"px"; el.style.top=drag.c.y+"px"; } requestAnimationFrame(renderWires); }
 function up(){ if(!drag) return; const el=document.getElementById(drag.uid); if(el) el.classList.remove("dragging"); drag=null; document.removeEventListener('pointermove',move); document.removeEventListener('pointerup',up); renderBoard(); }
-
-function setDisplay(m){
- displayMode=m;
- document.getElementById("modeReal").classList.toggle("btn-active",m==='real');
- document.getElementById("modeIec").classList.toggle("btn-active",m==='iec');
- document.getElementById("modeBoth").classList.toggle("btn-active",m==='both');
- renderBoard();
-}
-function toggleLeft(){ const p=document.getElementById("leftPanel"), f=document.getElementById("fab"); const hidden=p.style.display==='none'; p.style.display=hidden?'flex':'none'; f.style.display=hidden?'none':'block'; }
-function toggleSound(){ soundOn=!soundOn; document.getElementById("sndBtn").innerText=soundOn?'🔊 صوت':'🔇 صامت'; if(!soundOn) stopAll(); }
-function toggleSim(){
- simOn=!simOn; const b=document.getElementById("simBtn"), d=document.getElementById("simDot"), t=document.getElementById("simTxt");
- if(simOn){ b.innerText='⏸ إيقاف'; b.classList.add("btn-active"); d.style.background='#00e676'; t.innerText='يعمل'; runSim(); }
- else { b.innerText='▶ تشغيل'; b.classList.remove("btn-active"); d.style.background='#555'; t.innerText='متوقف'; board.forEach(c=>{ c.state.running=false; c.state.energized=false; stop(c.uid); }); renderBoard(); document.getElementById("fault").innerText=''; }
-}
-function runSim(){
- if(!simOn) return;
- let fault=""; board.forEach(c=>{ if(COMPS[c.type].type!=="breaker") c.state.running=false; c.state.energized=false; });
- const supply=board.find(c=>c.type.includes("supply"));
- if(!supply){ fault="❌ لا يوجد مصدر موحد"; document.getElementById("fault").innerText=fault; return; }
- board.filter(c=>COMPS[c.type].type==="km").forEach(km=>{
-  const start=board.find(c=>COMPS[c.type].type==="pb_no"&&c.state.pressed);
-  const stopB=board.find(c=>COMPS[c.type].type==="pb_nc"&&c.state.pressed);
-  if(stopB){ km.state.energized=false; km.state.latched=false; stop(km.uid); }
-  else if(start){ km.state.energized=true; km.state.latched=true; play("contactor",false,km.uid); }
-  else if(km.state.latched){ km.state.energized=true; }
- });
- board.filter(c=>COMPS[c.type].type==="motor").forEach(m=>{
-  const km=board.find(c=>COMPS[c.type].type==="km"&&c.state.energized);
-  const breakerOff=board.find(c=>COMPS[c.type].type==="breaker"&&!c.state.closed);
-  if(breakerOff){ fault="⚠️ قاطع مفصول - اضغط عليه للتشغيل"; return; }
-  if(!km){ fault="⚠️ الكونتاكتور غير ملقط - اضغط START"; return; }
-  m.state.running=true; play("motor",true,m.uid);
- });
- board.filter(c=>COMPS[c.type].type==="gen").forEach(g=>{ g.state.running=true; play("generator",true,g.uid); });
- board.filter(c=>COMPS[c.type].type==="lamp").forEach(l=>{
-  const km=board.find(c=>COMPS[c.type].type==="km"&&c.state.energized); if(km) l.state.running=true;
- });
- document.getElementById("fault").innerText=fault|| (board.some(c=>c.state.running)?`✅ 🔊 يعمل ${board.filter(c=>c.state.running).length} جهاز`:"ℹ️ اضغط START من الرسم");
- renderBoard();
-}
-
+function setDisp(m){ disp=m; document.getElementById("bReal").classList.toggle("btn-active",m==='real'); document.getElementById("bIec").classList.toggle("btn-active",m==='iec'); document.getElementById("bBoth").classList.toggle("btn-active",m==='both'); renderBoard(); }
+function toggleLeft(){ const p=document.getElementById("leftPanel"); p.style.display=p.style.display==='none'?'block':'none'; }
+function toggleSound(){ soundOn=!soundOn; document.getElementById("sndBtn").innerText=soundOn?'🔊':'🔇'; if(!soundOn) stopAll(); }
+function toggleSim(){ simOn=!simOn; const b=document.getElementById("simBtn"), d=document.getElementById("dot"), t=document.getElementById("txt"); if(simOn){ b.innerText='⏸ إيقاف'; b.classList.add("btn-active"); d.style.background='#00e676'; t.innerText='يعمل'; runSim(); } else { b.innerText='▶ تشغيل'; b.classList.remove("btn-active"); d.style.background='#555'; t.innerText='متوقف'; board.forEach(c=>{ c.state.running=false; c.state.energized=false; stop(c.uid); }); renderBoard(); document.getElementById("fault").innerText=''; } }
+function runSim(){ if(!simOn) return; let fault=""; board.forEach(c=>{ if(COMPS[c.type].type!=="breaker") c.state.running=false; c.state.energized=false; }); const sup=board.find(c=>c.type.includes("supply")); if(!sup){ fault="❌ لا يوجد مصدر"; document.getElementById("fault").innerText=fault; return; } board.filter(c=>COMPS[c.type].type==="km").forEach(km=>{ const st=board.find(c=>COMPS[c.type].type==="pb_no"&&c.state.pressed); const sp=board.find(c=>COMPS[c.type].type==="pb_nc"&&c.state.pressed); if(sp){ km.state.energized=false; km.state.latched=false; stop(km.uid); } else if(st){ km.state.energized=true; km.state.latched=true; play("contactor",false,km.uid); } else if(km.state.latched){ km.state.energized=true; } }); board.filter(c=>COMPS[c.type].type==="motor").forEach(m=>{ const km=board.find(c=>COMPS[c.type].type==="km"&&c.state.energized); const off=board.find(c=>COMPS[c.type].type==="breaker"&&!c.state.closed); if(off){ fault="⚠️ قاطع مفصول"; return; } if(!km){ fault="⚠️ الكونتاكتور غير ملقط - اضغط START"; return; } m.state.running=true; play("motor",true,m.uid); }); board.filter(c=>COMPS[c.type].type==="gen").forEach(g=>{ g.state.running=true; play("generator",true,g.uid); }); document.getElementById("fault").innerText=fault|| (board.some(c=>c.state.running)?`✅ 🔊 يعمل`:"ℹ️ اضغط START"); renderBoard(); }
+function undoW(){ if(history.length){ wires=history.pop(); renderBoard(); } else if(wires.length){ wires.pop(); renderBoard(); } }
 function autoDOL(){
  board=[]; wires=[];
  const mk=(type,x,y)=>({uid:"c"+type+Date.now()+Math.floor(Math.random()*999),type,x,y,w:138,h:84,state:{closed:true,pressed:false,running:false,energized:false,latched:false}});
@@ -424,14 +552,12 @@ function autoDOL(){
  ];
  document.getElementById("hint").style.display="none"; renderBoard();
 }
-
-function downloadManifest(){
- const data={IMAGE_LINKS,TERMINALS,COMPS:Object.keys(COMPS)};
- const blob=new Blob([JSON.stringify(data,null,2)],{type:"application/json"});
- const url=URL.createObjectURL(blob); const a=document.createElement("a"); a.href=url; a.download="classic_v11_manifest.json"; a.click();
- // download html
- const htmlContent=document.documentElement.outerHTML;
- const blob2=new Blob([htmlContent],{type:"text/html"}); const url2=URL.createObjectURL(blob2); const a2=document.createElement("a"); a2.href=url2; a2.download="classic_v11_online.html"; a2.click();
+function autoStarDelta(){
+ board=[]; wires=[];
+ const mk=(type,x,y)=>({uid:"c"+type+Date.now()+Math.floor(Math.random()*999),type,x,y,w:138,h:84,state:{closed:true,pressed:false,running:false,energized:false,latched:false}});
+ const s=mk("supply_3pnpe",20,10), q=mk("mcb_3p",200,10), km=mk("contactor",360,10), ks=mk("contactor",520,10), kd=mk("contactor",520,120), m=mk("motor_3p",360,140);
+ board=[s,q,km,ks,kd,m]; document.getElementById("hint").style.display="none"; renderBoard();
+ document.getElementById("fault").innerText="⭐ دائرة ستار دلتا - صل الموتور 6 أطراف";
 }
 
 renderPalette(); renderBoard();
